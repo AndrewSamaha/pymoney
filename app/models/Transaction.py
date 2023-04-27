@@ -1,8 +1,11 @@
 from sqlalchemy import create_engine, Column, Integer, String, Date, Float, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from app.constants.db import connectionString
 
+engine = create_engine(connectionString, echo=False)
 Base = declarative_base()
+
 class Transaction(Base):
     __tablename__ = 'transactions'
 
@@ -29,6 +32,11 @@ class Transaction(Base):
 
     # added fields
     sha256 = Column(String)
-    seenTime = Column(DateTime)
-    firstSeen = Column(Date)
-    lastSeen = Column(Date)
+    observations = Column(Integer)
+    firstLoadID = Column(Integer)
+    lastLoadID = Column(Integer)
+
+Base.metadata.create_all(bind=engine, checkfirst=True)
+
+class TransactionStaging(Transaction):
+    __tablename__ = 'transactions_staging'

@@ -18,10 +18,3 @@ class Account(Base):
     csvPath = Column(String)
 
 Base.metadata.create_all(bind=engine, checkfirst=True)
-
-# class Account(orm_sqlite.Model):  
-#     id = orm_sqlite.IntegerField(primary_key=True) # auto-increment
-#     name = orm_sqlite.StringField()
-#     accountNumber = orm_sqlite.StringField()
-#     interestRate = orm_sqlite.FloatField()
-#     statementDate = orm_sqlite.
