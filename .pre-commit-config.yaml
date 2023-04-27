@@ -1,0 +1,10 @@
+default_language_version:
+    python: python3.10
+repos:
+  - repo: local
+    hooks:
+      - id: my_pre_commit_hook
+        name: Sanitize Jupyter Notebooks
+        files: \.ipynb$
+        entry: python3 scripts/sanitize_notebook.py
+        language: python
