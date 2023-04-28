@@ -5,6 +5,7 @@ from datetime import datetime
 
 from app.helpers.hash import hash, hashType
 from app.constants.db import rawCsvPath
+from app.models.Load import Load
 
 def openOneCsv(path):
     df = pd.read_csv(path, index_col=False)
@@ -13,7 +14,7 @@ def openOneCsv(path):
     df['filename'] = path
     return df
 
-def getAccountHistory(path):
+def getAccountHistory(path, accountId, session):
     df = None
     accountPath = f"{rawCsvPath}/{path}"
     for file in os.listdir(accountPath):
@@ -23,23 +24,23 @@ def getAccountHistory(path):
         filename = filenameParts[:len(filenameParts)-1][0]
         print(f"reading {filename}")
 
-        pattern = r'(\d{4}|\d{8})'
-        pattern = r'(\d{8})'
-        dates = re.findall(pattern, filename)
-            
-        if df is None:
-            df = openOneCsv(fileAndPath)
-        else:
-            df = pd.concat([df, openOneCsv(fileAndPath)])
+        newDf = openOneCsv(fileAndPath)
 
-        #checkingdf = pd.read_csv(path, index_col=False)
-    if 'Posting Date' in df.columns:
-        df['Post Date'] = df['Posting Date']
-        df = df.drop(axis=1, columns=['Posting Date'])
-        # cols = df.columns
-        # cols = cols[-1:] + cols[:-1]
-        # df = df[cols]
-    
+        if 'Posting Date' in newDf.columns:
+            newDf['Post Date'] = newDf['Posting Date']
+            newDf = newDf.drop(axis=1, columns=['Posting Date'])
+        
+        if session is not None:
+            load = Load(accountId=accountId, fullFilePath=fileAndPath)
+            session.add(load)
+            session.commit()
+
+        if df is None:
+            df = newDf
+        else:
+            df = pd.concat([df, newDf])
+
+
     # Convert Date Strings to Date
     dateColumns = ['Post Date','Transaction Date']
     for dateColumn in dateColumns:

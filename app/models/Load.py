@@ -1,17 +1,16 @@
 # sql alchemy
-from sqlalchemy import create_engine, Column, Integer, String, Date, Float, DateTime
+from datetime import datetime
+from sqlalchemy import create_engine, ForeignKey, Column, Integer, String, Date, Float, DateTime, func
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship, mapped_column
 from app.constants.db import connectionString
-
-engine = create_engine(connectionString, echo=False)
-Base = declarative_base()
+from app.models.Base import Base
+from app.helpers.sqlEngine import engine
 
 class Load(Base):
     __tablename__ = 'loads'
-    id = Column(Integer, primary_key=True)
-    accountId = Column(Integer)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    accountId = mapped_column(ForeignKey('accounts.id'))
     fullFilePath = Column(String)
-    dateTime = Column(DateTime)
-
-Base.metadata.create_all(bind=engine, checkfirst=True)
+    dateTime = Column(DateTime, default=datetime.utcnow)
+    account = relationship("Account", back_populates="loads")
