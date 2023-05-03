@@ -15,6 +15,18 @@ def openOneCsv(path):
     df['filename'] = path
     return df
 
+def prepCheckingDf(df, loadID):
+    df = df.rename(columns={
+        'Details': 'details',
+        'Description': 'description',
+        'Amount': 'amount',
+        'Type': 'type',
+        'Balance': 'balance',
+        'Check or Slip #': 'checkOrSlipNumber'
+    })
+    df['loadID'] = loadID
+    return df
+
 def loadStagingTransactions(df):
     for index, row in df.iterrows():
         x= 1
@@ -43,13 +55,17 @@ def getAccountHistory(path, accountId, session):
             print(f" path={fileAndPath}")
             print(f"  matchingLoads.shape={matchingLoads.shape}")
             load = Load(accountId=accountId, fullFilePath=fileAndPath)
+            print(f"  load.id={load.id}")
             session.add(load)
             session.commit()
+            print(f"  load.id={load.id} (post-commit)")
+            preppedDf = prepCheckingDf(newDf, load.id)
+            #display(preppedDf)
 
         if df is None:
-            df = newDf
+            df = preppedDf
         else:
-            df = pd.concat([df, newDf])
+            df = pd.concat([df, preppedDf])
 
     if df is None:
         return None
