@@ -8,8 +8,16 @@ from app.helpers.hash import hash, hashType
 from app.constants.db import rawCsvPath
 from app.models.Load import Load
 
+def getDateColumns(path):
+    columns = list(pd.read_csv(path, index_col=False, nrows=2).columns)
+    date_columns = [s for s in columns if 'Date' in s]
+    return date_columns
+
 def openOneCsv(path):
-    df = pd.read_csv(path, index_col=False)
+    date_columns = getDateColumns(path)
+    print(f"reading {path} with these date columns: {date_columns}")
+    df = pd.read_csv(path, index_col=False, parse_dates=date_columns)
+
     df[hashType] = df.apply(hash, axis=1)
     return df
 
@@ -36,7 +44,6 @@ def getAccountHistory(path, accountId, session):
         fileAndPath = f"{rawCsvPath}/{path}/{file}"
         filenameParts = file.split('.')
         filename = filenameParts[:len(filenameParts)-1][0]
-        print(f"reading {filename}")
 
         newDf = openOneCsv(fileAndPath)
 
@@ -54,6 +61,7 @@ def getAccountHistory(path, accountId, session):
             load = Load(accountId=accountId, fullFilePath=fileAndPath)
             session.add(load)
             session.commit()
+            newDf['accountId'] = accountId
             preppedDf = prepCheckingDf(newDf, load.id)
 
         if df is None:
@@ -68,7 +76,7 @@ def getAccountHistory(path, accountId, session):
     dateColumns = ['Post Date','Transaction Date']
     for dateColumn in dateColumns:
         if dateColumn in df.columns:
-            df[dateColumn] = pd.to_datetime(df[dateColumn], format='%m/%d/%Y')
+            df[dateColumn] = pd.to_datetime(df[dateColumn], format='%Y-%m-%d') # %m-%d-%Y
 
     # sort by Post Date and then sha
     df = df.sort_values(by=['postDate', 'sha256'], ascending=False)

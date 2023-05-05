@@ -10,7 +10,8 @@ class Transaction(Base):
     __tablename__ = 'transactions_all'
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
-    accountNumber = Column(String)
+    #accountNumber = Column(String)
+    accountId = Column(Integer)
 
     # checking account fields 8115
     details = Column(String)
