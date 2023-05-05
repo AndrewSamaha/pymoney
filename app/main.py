@@ -11,7 +11,10 @@ from app.constants.db import connectionString
 from app.helpers.sqlEngine import engine
 
 def getTables(engine):
-    df = pd.read_sql(sql=text("select * from Accounts"), con=engine.connect())   
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    df = pd.read_sql(sql=text("select * from Accounts"), con=session.connection())   
+    session.close()
     return df
 
 Base.metadata.create_all(bind=engine, checkfirst=True)

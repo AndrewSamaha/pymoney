@@ -11,8 +11,6 @@ from app.models.Load import Load
 def openOneCsv(path):
     df = pd.read_csv(path, index_col=False)
     df[hashType] = df.apply(hash, axis=1)
-    df['seenTime'] = datetime.now()
-    df['filename'] = path
     return df
 
 def prepCheckingDf(df, loadID):
@@ -22,14 +20,14 @@ def prepCheckingDf(df, loadID):
         'Amount': 'amount',
         'Type': 'type',
         'Balance': 'balance',
-        'Check or Slip #': 'checkOrSlipNumber'
+        'Check or Slip #': 'checkOrSlipNumber',
+        'Post Date': 'postDate',
+        'Transaction Date': 'transactionDate',
+        'Category': 'category'
     })
+    df = df.drop(['seenTime'], errors='ignore')
     df['loadID'] = loadID
     return df
-
-def loadStagingTransactions(df):
-    for index, row in df.iterrows():
-        x= 1
 
 def getAccountHistory(path, accountId, session):
     df = None
@@ -37,7 +35,6 @@ def getAccountHistory(path, accountId, session):
     for file in os.listdir(accountPath):
         fileAndPath = f"{rawCsvPath}/{path}/{file}"
         filenameParts = file.split('.')
-        extension = filenameParts[-1]
         filename = filenameParts[:len(filenameParts)-1][0]
         print(f"reading {filename}")
 
@@ -48,19 +45,16 @@ def getAccountHistory(path, accountId, session):
             newDf = newDf.drop(axis=1, columns=['Posting Date'])
         
         if session is not None:
-            matchingLoads = pd.read_sql(sql=text(f"select * from loads WHERE fullFilePath = '{fileAndPath}'"), con=session.connection()) # con=engine.connect())   
+            matchingLoads = pd.read_sql(sql=text(f"select * from loads WHERE fullFilePath = '{fileAndPath}'"), con=session.connection()) 
+
             if matchingLoads.shape[0] > 0:
                 print(f"  skipping {matchingLoads.shape[0]}")
                 continue
-            print(f" path={fileAndPath}")
-            print(f"  matchingLoads.shape={matchingLoads.shape}")
+            
             load = Load(accountId=accountId, fullFilePath=fileAndPath)
-            print(f"  load.id={load.id}")
             session.add(load)
             session.commit()
-            print(f"  load.id={load.id} (post-commit)")
             preppedDf = prepCheckingDf(newDf, load.id)
-            #display(preppedDf)
 
         if df is None:
             df = preppedDf
@@ -77,6 +71,6 @@ def getAccountHistory(path, accountId, session):
             df[dateColumn] = pd.to_datetime(df[dateColumn], format='%m/%d/%Y')
 
     # sort by Post Date and then sha
-    df = df.sort_values(by=['Post Date', 'sha256'], ascending=False)
+    df = df.sort_values(by=['postDate', 'sha256'], ascending=False)
     
     return df
