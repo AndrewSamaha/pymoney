@@ -1,10 +1,7 @@
 # sql alchemy
-from sqlalchemy import create_engine, Column, Integer, String, Date, Float
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship
-from app.constants.db import connectionString
+from sqlalchemy import Column, Integer, String, Date, Float
+from sqlalchemy.orm import relationship
 from app.models.Base import Base
-from app.helpers.sqlEngine import engine
 
 class Account(Base):
     __tablename__ = 'accounts'

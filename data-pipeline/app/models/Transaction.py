@@ -1,9 +1,7 @@
 from sqlalchemy import create_engine, Column, ForeignKey, Integer, String, Date, Float, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship, mapped_column, declarative_mixin, declared_attr
-from app.constants.db import connectionString
 from app.models.Base import Base
-from app.helpers.sqlEngine import engine
 
 @declarative_mixin
 class Transaction(Base):

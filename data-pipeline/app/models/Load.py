@@ -3,9 +3,7 @@ from datetime import datetime
 from sqlalchemy import create_engine, ForeignKey, Column, Integer, String, Date, Float, DateTime, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship, mapped_column
-from app.constants.db import connectionString
 from app.models.Base import Base
-from app.helpers.sqlEngine import engine
 
 class Load(Base):
     __tablename__ = 'loads'
