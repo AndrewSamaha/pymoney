@@ -19,12 +19,14 @@ class Transaction(Base):
     checkOrSlipNumber = Column(String)
 
     # credit account fields
-    transactionDate = Column(Date)
+    #transactionDate = Column(Date)
+    transactionDate = Column(String)
     category = Column(String)
     memo = Column(String)
 
     # shared fields
-    postDate = Column(Date) # labeled 'Posting Date' on the checking account -- orm-sqlite doesn't have date types?
+    #postDate = Column(Date) # labeled 'Posting Date' on the checking account -- orm-sqlite doesn't have date types?
+    postDate = Column(String)
     description = Column(String)
     amount = Column(Float)
 
