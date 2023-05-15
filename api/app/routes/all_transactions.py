@@ -15,10 +15,6 @@ engine = create_engine(connectionString)
 Session = sessionmaker(bind=engine)
 router = APIRouter()
 
-@router.get("/ping")
-def ping():
-    return {"message": "pong"}
-
 @router.get("/transactions")
 async def get_users():
     engine = create_engine(connectionString)
