@@ -86,11 +86,6 @@ async def get_transactions_two():
 async def get_transactions_three():
     session_list = list(get_session())
     session = session_list[len(session_list) - 1]
-    # transactions = session.query(
-    #     Transaction.description,
-    #     Transaction.postDate,
-    #     Transaction.transactionDate
-    # ).all()
     transactions = session.query(Transaction).all()
     session.close()
     return {
