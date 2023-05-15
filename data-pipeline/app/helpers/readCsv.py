@@ -17,8 +17,9 @@ def openOneCsv(path):
     date_columns = getDateColumns(path)
     print(f"reading {path} with these date columns: {date_columns}")
     df = pd.read_csv(path, index_col=False, parse_dates=date_columns)
-    df['stagingLevel'] = 'allTransactions'
     df[hashType] = df.apply(hash, axis=1)
+    df['stagingLevel'] = 'allTransactions'
+    
     return df
 
 def prepCheckingDf(df, loadID):
