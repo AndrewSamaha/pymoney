@@ -8,6 +8,14 @@ from app.helpers.hash import hash, hashType
 from app.constants.db import rawCsvPath
 from app.models.Load import Load
 
+def setDateColumns(df):
+    columns = list(df.columns)
+    date_columns = [s for s in columns if 'Date' in s]
+    for column in date_columns:
+        print(f"  converting [{column}] to datetime")
+        df[column] = pd.to_datetime(df[column])
+    return df
+
 def getDateColumns(path):
     columns = list(pd.read_csv(path, index_col=False, nrows=2).columns)
     date_columns = [s for s in columns if 'Date' in s]
