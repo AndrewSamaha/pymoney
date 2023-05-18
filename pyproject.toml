@@ -6,9 +6,12 @@ authors = ["Andrew Samaha <andrew.samaha@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-pre-commit = "^3.2.2"
+python = "^3.10"
 data-pipeline = { path = "data-pipeline" }
 api = { path = "api" }
+
+[tool.poetry.dev-dependencies]
+pre-commit = "^3.2.2"
 
 [build-system]
 requires = ["poetry-core"]

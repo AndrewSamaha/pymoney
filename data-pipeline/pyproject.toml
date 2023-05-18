@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pymoney"
+name = "data-pipeline"
 version = "0.1.0"
 description = "A Python-based money management and forecasting tool."
 authors = ["Andrew Samaha <andrew.samaha@gmail.com>"]
@@ -12,6 +12,8 @@ SQLAlchemy = "^2.0.10"
 setuptools = "^59.6.0"
 cryptography = "^40.0.2"
 path = "^16.6.0"
+
+[tool.poetry.dev-dependencies]
 pre-commit = "^3.2.2"
 
 [tool.poetry.scripts]
@@ -20,3 +22,4 @@ testscript = "./scripts/testscript.py"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+packages = ['data-pipeline/']
