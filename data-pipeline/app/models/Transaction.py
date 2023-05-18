@@ -1,9 +1,7 @@
 from sqlalchemy import create_engine, Column, ForeignKey, Integer, String, Date, Float, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship, mapped_column, declarative_mixin, declared_attr
-from app.constants.db import connectionString
 from app.models.Base import Base
-from app.helpers.sqlEngine import engine
 
 @declarative_mixin
 class Transaction(Base):
@@ -21,12 +19,14 @@ class Transaction(Base):
     checkOrSlipNumber = Column(String)
 
     # credit account fields
-    transactionDate = Column(Date)
+    #transactionDate = Column(Date)
+    transactionDate = Column(String)
     category = Column(String)
     memo = Column(String)
 
     # shared fields
-    postDate = Column(Date) # labeled 'Posting Date' on the checking account -- orm-sqlite doesn't have date types?
+    #postDate = Column(Date) # labeled 'Posting Date' on the checking account -- orm-sqlite doesn't have date types?
+    postDate = Column(String)
     description = Column(String)
     amount = Column(Float)
 

@@ -1,17 +1,16 @@
 [tool.poetry]
-name = "pymoney"
+name = "api"
 version = "0.1.0"
-description = "A Python-based money management and forecasting tool."
+description = "Python back-end to perform CRUD operations"
 authors = ["Andrew Samaha <andrew.samaha@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-data-pipeline = { path = "data-pipeline" }
-api = { path = "api" }
+sqlalchemy = "^2.0.12"
+fastapi = "^0.95.1"
+uvicorn = "^0.22.0"
 
-[tool.poetry.dev-dependencies]
-pre-commit = "^3.2.2"
 
 [build-system]
 requires = ["poetry-core"]
