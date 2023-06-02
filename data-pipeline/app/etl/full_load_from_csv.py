@@ -19,7 +19,7 @@ def full_load_from_csv(engine):
         Session = sessionmaker(bind=engine)
         session = Session()
         allFiles = getAccountHistory(path, account['id'], session)
-        display(allFiles)
+        # display(allFiles)
         allFiles.to_sql('transactions_all', con=session.connection(), if_exists='append', index=False, chunksize=10)
         session.connection().commit()
         session.close()

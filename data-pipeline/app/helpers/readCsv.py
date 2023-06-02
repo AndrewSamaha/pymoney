@@ -12,7 +12,7 @@ def setDateColumns(df):
     columns = list(df.columns)
     date_columns = [s for s in columns if 'Date' in s]
     for column in date_columns:
-        print(f"  converting [{column}] to datetime")
+        #print(f"  converting [{column}] to datetime")
         df[column] = pd.to_datetime(df[column])
     return df
 
@@ -23,13 +23,13 @@ def getDateColumns(path):
 
 def openOneCsv(path):
     date_columns = getDateColumns(path)
-    print(f"reading {path} with these date columns: {date_columns}")
+    #print(f"reading {path} with these date columns: {date_columns}")
     df = pd.read_csv(path, index_col=False, parse_dates=date_columns)
     if "Balance" in df.columns:
-        print(" setting Balance to numeric")
+        #print(" setting Balance to numeric")
         df["Balance"] = pd.to_numeric(df["Balance"], errors="coerce")
-    print(f"column types: {df.dtypes}")
-    print(f". all columns={df.columns}")
+    #print(f"column types: {df.dtypes}")
+    #print(f". all columns={df.columns}")
     df[hashType] = df.apply(hash, axis=1)
     df['stagingLevel'] = 'allTransactions'
     
