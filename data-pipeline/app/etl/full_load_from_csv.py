@@ -1,6 +1,7 @@
 from sqlalchemy.orm import sessionmaker
 
-from app.main import TransactionFinal
+#from app.main import TransactionFinal
+from app import TransactionFinal
 from app.helpers.readCsv import openOneCsv, getAccountHistory, setDateColumns
 
 from app.crud.delete.truncate_all import truncate_all
