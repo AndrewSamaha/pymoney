@@ -1,7 +1,7 @@
-# data-pipeline.app.__init__.py
+# data-pipeline.dbwrapper.__init__.py
 
 # from .constants.db import connectionString
-print('inside app.__init__')
+print('inside dbwrapper.__init__')
 from .constants import connectionString
 
 from .models.Base import Base
@@ -13,4 +13,4 @@ from .helpers.sqlEngine import engine
 from .helpers.query_to_df import query_to_df
 
 from .helpers.readCsv import setDateColumns
-print('leaving app.__init__')
+print('leaving dbwrapper.__init__')

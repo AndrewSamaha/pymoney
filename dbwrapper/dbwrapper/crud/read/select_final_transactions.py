@@ -1,6 +1,6 @@
 from sqlalchemy.orm import sessionmaker
-#from app.main import TransactionFinal
-from app import TransactionFinal
+#from dbwrapper.main import TransactionFinal
+from dbwrapper import TransactionFinal
 
 def select_final_transactions(engine):
     Session = sessionmaker(bind=engine)

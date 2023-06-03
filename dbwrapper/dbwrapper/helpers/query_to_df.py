@@ -1,7 +1,7 @@
 import pandas as pd
-#from app.helpers.readCsv import setDateColumns
+#from dbwrapper.helpers.readCsv import setDateColumns
 from . import setDateColumns
-#from app.helpers.readCsv import setDateColumns
+#from dbwrapper.helpers.readCsv import setDateColumns
 
 def query_to_df(query, convert_date_columns=True):
     result = query.all()

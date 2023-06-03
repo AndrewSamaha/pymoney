@@ -1,4 +1,4 @@
-# data-pipeline.app.helpers.__init__.py
+# data-pipeline.dbwrapper.helpers.__init__.py
 
 from .dates import getDateColumns, setDateColumns
 from .hash import hash, hashLength, hashType
