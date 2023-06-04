@@ -13,4 +13,7 @@ from .helpers.sqlEngine import engine
 from .helpers.query_to_df import query_to_df
 
 from .helpers.readCsv import setDateColumns
+
+from .crud.read.select_summary_df import select_summary_df
+
 print('leaving dbwrapper.__init__')

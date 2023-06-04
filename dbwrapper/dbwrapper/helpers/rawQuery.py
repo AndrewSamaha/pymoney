@@ -10,3 +10,10 @@ def rawQuery(sql, engine):
 
     # Close the result set and the connection
     session.close()
+
+def rawQueryDf(sql, engine):
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    df = pd.read_sql(sql=text(sql), con=session.connection())   
+    session.close()
+    return df
