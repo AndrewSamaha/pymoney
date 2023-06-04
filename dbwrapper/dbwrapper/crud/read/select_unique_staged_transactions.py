@@ -1,5 +1,5 @@
 from sqlalchemy.orm import sessionmaker
-from app.main import getTables, Base, Account, Transaction, TransactionFinal, Load
+from ...models import Transaction
 
 def select_unique_staged_transactions(engine):
     Session = sessionmaker(bind=engine)

@@ -1,2 +1,2 @@
-dbfilepath = '../data-pipeline/db/money.sqlite'
+dbfilepath = '../dbwrapper/db/money.sqlite'
 connectionString = f"sqlite:///{dbfilepath}"
