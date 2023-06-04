@@ -1,4 +1,5 @@
 from sqlalchemy import create_engine
-from dbwrapper.constants.db import connectionString
+#from ...constants import connectionString
+from ..constants import connectionString
 
 engine = create_engine(connectionString, echo=False)

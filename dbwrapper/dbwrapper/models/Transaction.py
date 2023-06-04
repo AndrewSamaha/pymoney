@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, Column, ForeignKey, Integer, String, Date, Float, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship, mapped_column, declarative_mixin, declared_attr
-from dbwrapper.models.Base import Base
+from .Base import Base
 
 @declarative_mixin
 class Transaction(Base):

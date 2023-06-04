@@ -6,8 +6,8 @@ from sqlalchemy import text
 
 # from dbwrapper.helpers.hash import hash, hashType
 # from dbwrapper.constants.db import rawCsvPath
-from dbwrapper.constants import rawCsvPath
-from dbwrapper.models.Load import Load
+from ..constants import rawCsvPath
+from ..models import Load
 
 from . import setDateColumns, getDateColumns, hash, hashType
 
