@@ -1,2 +1,2 @@
 #!/bin/bash
-aws s3 sync ./dbwrapper/db s3://pymoney
+aws s3 sync ./db s3://pymoney
