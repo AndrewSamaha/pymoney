@@ -4,20 +4,24 @@ from sqlalchemy import create_engine, Column, Integer, String, text
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-from app.models.Base import Base
-from app.models.Account import Account
-from app.models.Transaction import TransactionFinal, Transaction
-from app.models.Load import Load
-from app.constants.db import connectionString
+# from app.models.Base import Base
+# from app.models.Account import Account
+# from app.models.Transaction import TransactionFinal, Transaction
+# from app.models.Load import Load
+
+#from app.dbwrapper import Base
+#from app.dbwrapper import Account
+#from app.dbwrapper import TransactionFinal, Transaction
+#import app.dbwrapper
+from app.dbwrapper import *
+#from app.dbwrapper import Load
+print(f"all_transactions.connectionString={connectionString}")
+#from app.constants.db import connectionString
 from app.helpers.dbsession import get_session
 
 engine = create_engine(connectionString)
 Session = sessionmaker(bind=engine)
 router = APIRouter()
-
-@router.get("/health-check")
-def ping():
-    return {"healthy": "true"}
 
 @router.get("/transactions")
 async def get_users():
