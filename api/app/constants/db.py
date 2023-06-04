@@ -1,2 +1,2 @@
-dbfilepath = '../dbwrapper/db/money.sqlite'
+dbfilepath = '../db/money.sqlite'
 connectionString = f"sqlite:///{dbfilepath}"
