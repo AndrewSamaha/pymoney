@@ -13,8 +13,9 @@ from dotenv import load_dotenv
 directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 
+from dbwrapper.constants import connectionString as defaultConnectionString
+from dbwrapper.models import Base
 
-from  dbwrapper.constants import connectionString as defaultConnectionString
 load_dotenv()
 
 
@@ -41,7 +42,7 @@ def getSeedEngine(connectionString=defaultConnectionString):
     return create_engine(connectionString, echo=True)
 
 # This will be typically be called by seed
-def seed_worker(seedFolder=None, engine=None, dryrun=False):
+def seed_worker(seedFolder=None, engine=None, dryrun=False, metadata=None):
     print(f"running seed_worker(dryrun={dryrun})")
     if not seedFolder:
         raise ValueError('No seedFolder specified, expecting something like db/seed_data')
@@ -49,9 +50,10 @@ def seed_worker(seedFolder=None, engine=None, dryrun=False):
     if not engine:
         raise ValueError('No engine specified.')
 
-    print(f"in seed_worker")
-    quit()
-    
+    if not metadata:
+        raise ValueError('No metadata supplied.')
+
+    metadata.create_all(bind=engine, checkfirst=True)
 
     for filename in os.listdir(seedFolder):
         filepath = f"{seedFolder}/{filename}"
@@ -87,7 +89,7 @@ def seed(connectionString=defaultConnectionString, engine=None, dryrunCLI=None):
     print(f"connectionString={connectionString}")
     print(f"SEED_DRYRUN={os.environ.get('SEED_DRYRUN')}")
 
-    seed_worker(seedFolder, engine, dryrun)
+    seed_worker(seedFolder, engine, dryrun, Base.metadata)
 
 
 def verifyPath():
