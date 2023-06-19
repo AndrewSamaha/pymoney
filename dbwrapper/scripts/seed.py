@@ -28,21 +28,30 @@ def getSeedFolder(env):
         return seedFolder[env.lower()]
     return seedFolder['default']
 
-def getSeedEngine(connectionString=defaultConnectionString, engine=None):
-    if engine:
-        return engine
+def getConnectionString(env):
+    connectionString = {
+        'local': defaultConnectionString,
+        'test': 'sqlite:///tests/mock_data/mockdb.sqlite'
+    }
+    if env.lower() in connectionString:
+        return connectionString[env.lower()]
+    return connectionString['test']
+
+def getSeedEngine(connectionString=defaultConnectionString):
     return create_engine(connectionString, echo=True)
 
 # This will be typically be called by seed
-def seed_worker(seedFolder=None, connectionString=defaultConnectionString, engine=None, dryrun=False):
+def seed_worker(seedFolder=None, engine=None, dryrun=False):
     print(f"running seed_worker(dryrun={dryrun})")
     if not seedFolder:
         raise ValueError('No seedFolder specified, expecting something like db/seed_data')
     
-    if not connectionString:
-        raise ValueError('No connectionString specified.')
-    #quit()
-    engine = getSeedEngine(connectionString, engine)
+    if not engine:
+        raise ValueError('No engine specified.')
+
+    print(f"in seed_worker")
+    quit()
+    
 
     for filename in os.listdir(seedFolder):
         filepath = f"{seedFolder}/{filename}"
@@ -65,16 +74,20 @@ def seed_worker(seedFolder=None, connectionString=defaultConnectionString, engin
 # This is a wrapper for seed_worker
 def seed(connectionString=defaultConnectionString, engine=None, dryrunCLI=None):
     seedFolder = getSeedFolder(os.environ.get("ENVIRONMENT"))
-    print(f"environment={os.environ.get('ENVIRONMENT')}")
-    print(f"seedFolder={seedFolder}")
-    print(f"connectionString={connectionString}")
-    print(f"SEED_DRYRUN={os.environ.get('SEED_DRYRUN')}")
     dryrunENV = os.environ.get("SEED_DRYRUN").lower() in ['true', '1', 'yes', 'on'] if os.environ.get("SEED_DRYRUN") is not None else False
     
     if dryrunCLI or dryrunENV: dryrun = True
     else: dryrun = False
 
-    seed_worker(seedFolder, connectionString, engine, dryrun)
+    connectionString = getConnectionString(os.environ.get('ENVIRONMENT'))
+    engine = getSeedEngine(connectionString)
+
+    print(f"environment={os.environ.get('ENVIRONMENT')}")
+    print(f"seedFolder={seedFolder}")
+    print(f"connectionString={connectionString}")
+    print(f"SEED_DRYRUN={os.environ.get('SEED_DRYRUN')}")
+
+    seed_worker(seedFolder, engine, dryrun)
 
 
 def verifyPath():
