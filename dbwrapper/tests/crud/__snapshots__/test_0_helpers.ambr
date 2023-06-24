@@ -1,0 +1,19 @@
+# serializer version: 1
+# name: test_getConnectionString
+  'Test == sqlite:///tests/mock_data/mockdb.sqlite'
+# ---
+# name: test_getConnectionString.1
+  'local == sqlite:///../db/money.sqlite'
+# ---
+# name: test_getConnectionString.2
+  'default == sqlite:///tests/mock_data/mockdb.sqlite'
+# ---
+# name: test_getSeedFolder
+  'Test == ./tests/mock_data/seed_data/'
+# ---
+# name: test_getSeedFolder.1
+  'local == ../db/seed_data/'
+# ---
+# name: test_getSeedFolder.2
+  'default == ./testsmock_data/seed_data/'
+# ---

@@ -1,0 +1,9 @@
+# serializer version: 1
+# name: TestEtlPipeline.test_create_and_seed_db
+  '''
+  ,id,name,accountNumber,interestRate,statementDate,paymentDueDate,csvPath
+  0,1,Checking Account,111111111,0.0,,,checkingAccount/
+  1,2,Chase Freedom,222222222,20.0,,,creditAccount/
+  
+  '''
+# ---

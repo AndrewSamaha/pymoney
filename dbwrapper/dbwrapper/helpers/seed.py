@@ -1,5 +1,10 @@
 import os
-from sqlalchemy import text
+from sqlalchemy import text, create_engine
+from ..constants.db import connectionString as defaultConnectionString
+
+## Refactor this to accept an env like the helpers in constants/db!!!
+def getSeedEngine(connectionString=defaultConnectionString):
+    return create_engine(connectionString, echo=True)
 
 def seed_worker(seedFolder=None, engine=None, dryrun=False, metadata=None):
     print(f"running seed_worker(dryrun={dryrun})")

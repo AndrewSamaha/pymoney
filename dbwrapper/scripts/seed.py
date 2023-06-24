@@ -13,34 +13,11 @@ from dotenv import load_dotenv
 directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 
-from dbwrapper.constants import connectionString as defaultConnectionString
+from dbwrapper.constants import getConnectionString, getSeedFolder, connectionString as defaultConnectionString
 from dbwrapper.models import Base
-from dbwrapper.helpers import seed_worker
+from dbwrapper.helpers import seed_worker, getSeedEngine
 
 load_dotenv()
-
-
-def getSeedFolder(env):
-    seedFolder={
-        'local':    '../db/seed_data/',
-        'test':     './tests/mock_data/seed_data/',
-        'default':  './testsmock_data/seed_data/'
-    }
-    if env.lower() in seedFolder:
-        return seedFolder[env.lower()]
-    return seedFolder['default']
-
-def getConnectionString(env):
-    connectionString = {
-        'local': defaultConnectionString,
-        'test': 'sqlite:///tests/mock_data/mockdb.sqlite'
-    }
-    if env.lower() in connectionString:
-        return connectionString[env.lower()]
-    return connectionString['test']
-
-def getSeedEngine(connectionString=defaultConnectionString):
-    return create_engine(connectionString, echo=True)
 
 # This is a wrapper for seed_worker
 def seed(connectionString=defaultConnectionString, engine=None, dryrunCLI=None):
