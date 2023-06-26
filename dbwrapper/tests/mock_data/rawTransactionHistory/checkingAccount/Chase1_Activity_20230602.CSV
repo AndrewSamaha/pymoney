@@ -1,0 +1,6 @@
+Details,Posting Date,Description,Amount,Type,Balance,Check or Slip #
+DEBIT,06/20/2023,"POS DEBIT             PUBLIX                               FL",-44.44,MISC_DEBIT, ,,
+DEBIT,06/19/2023,"POS DEBIT             CITGO                                FL",-12.01,MISC_DEBIT, ,,
+DEBIT,06/18/2023,"POS DEBIT             MODERN Karate CENTER   TAMPA         FL",-108.00,MISC_DEBIT, ,,
+DEBIT,06/17/2023,"Payment to Credit card ending in 1111                   06/17",-700.00,ACCT_XFER,1651.89,,
+DEBIT,06/14/2023,"UTILITIES        UTIL PYMT                 PPD ID: 0000000001",-86.87,ACH_DEBIT,2351.89,,
