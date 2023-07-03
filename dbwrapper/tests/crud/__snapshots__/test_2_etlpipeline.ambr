@@ -44,3 +44,14 @@
   
   '''
 # ---
+# name: TestEtlPipeline.test_open_one_csv
+  '''
+  ,Details,Posting Date,Description,Amount,Type,Balance,Check or Slip #,sha256,stagingLevel
+  0,DEBIT,2023-06-20,POS DEBIT             PUBLIX                               FL,-44.44,MISC_DEBIT,,,bbfc65a715,allTransactions
+  1,DEBIT,2023-06-19,POS DEBIT             CITGO                                FL,-12.01,MISC_DEBIT,,,5a5183fb8d,allTransactions
+  2,DEBIT,2023-06-18,POS DEBIT             MODERN Karate CENTER   TAMPA         FL,-108.0,MISC_DEBIT,,,2b7ed14dd0,allTransactions
+  3,DEBIT,2023-06-17,Payment to Credit card ending in 1111                   06/17,-700.0,ACCT_XFER,1651.89,,c200376bf5,allTransactions
+  4,DEBIT,2023-06-14,UTILITIES        UTIL PYMT                 PPD ID: 0000000001,-86.87,ACH_DEBIT,2351.89,,a0ffbc02fb,allTransactions
+  
+  '''
+# ---
