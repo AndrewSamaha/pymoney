@@ -8,3 +8,10 @@ repos:
         files: \.ipynb$
         entry: python3 scripts/sanitize_notebook.py
         language: python
+  - repo: local
+    hooks:
+      - id: run_tests
+        language: script
+        name: Run tests
+        entry: ./scripts/run_tests.sh
+        stage: [commit]
