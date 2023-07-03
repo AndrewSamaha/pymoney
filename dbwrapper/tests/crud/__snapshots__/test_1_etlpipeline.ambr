@@ -1,0 +1,57 @@
+# serializer version: 1
+# name: TestEtlPipeline.test_create_and_seed_db
+  '''
+  ,id,name,accountNumber,interestRate,statementDate,paymentDueDate,csvPath
+  0,1,Checking Account,111111111,0.0,,,checkingAccount/
+  1,2,Chase Freedom,222222222,20.0,,,creditAccount/
+  
+  '''
+# ---
+# name: TestEtlPipeline.test_get_account_history
+  '''
+  ,details,description,amount,type,balance,checkOrSlipNumber,sha256,stagingLevel,postDate,accountId,loadID
+  0,DEBIT,POS DEBIT             PUBLIX                               FL,-44.44,MISC_DEBIT,,,bbfc65a715,allTransactions,2023-06-20,1,1
+  1,DEBIT,POS DEBIT             CITGO                                FL,-12.01,MISC_DEBIT,,,5a5183fb8d,allTransactions,2023-06-19,1,1
+  2,DEBIT,POS DEBIT             MODERN Karate CENTER   TAMPA         FL,-108.0,MISC_DEBIT,,,2b7ed14dd0,allTransactions,2023-06-18,1,1
+  0,DEBIT,POS DEBIT             MODERN Karate CENTER   TAMPA         FL,-108.0,MISC_DEBIT,,,2b7ed14dd0,allTransactions,2023-06-18,1,2
+  3,DEBIT,Payment to Credit card ending in 1111                   06/17,-700.0,ACCT_XFER,1651.89,,c200376bf5,allTransactions,2023-06-17,1,1
+  1,DEBIT,Payment to Credit card ending in 1111                   06/17,-700.0,ACCT_XFER,1651.89,,c200376bf5,allTransactions,2023-06-17,1,2
+  3,DEBIT,GOOGLE *Disney Mobile 855-836-3987 CA                   06/14,-12.47,DEBIT_CARD,2438.76,,dee5a7c27f,allTransactions,2023-06-14,1,2
+  4,CREDIT,JOBCOMPANY  PAYROLL                       PPD ID: 0000000001,3000.0,ACH_CREDIT,10000.0,,a4099b862b,allTransactions,2023-06-14,1,2
+  4,DEBIT,UTILITIES        UTIL PYMT                 PPD ID: 0000000001,-86.87,ACH_DEBIT,2351.89,,a0ffbc02fb,allTransactions,2023-06-14,1,1
+  2,DEBIT,UTILITIES        UTIL PYMT                 PPD ID: 0000000001,-86.87,ACH_DEBIT,2351.89,,a0ffbc02fb,allTransactions,2023-06-14,1,2
+  ,transactionDate,postDate,description,category,type,amount,Memo,sha256,stagingLevel,accountId,loadID
+  0,2023-06-24,2023-06-24,REDEMPTION CREDIT,Fees & Adjustments,Adjustment,1677.19,,c05ed95317,allTransactions,2,4
+  1,2023-06-23,2023-06-24,EQ *BARBAB,Shopping,Sale,-27.69,,bbedf7e175,allTransactions,2,3
+  3,2023-06-23,2023-06-24,EQ *BARBAB,Shopping,Sale,-27.69,,bbedf7e175,allTransactions,2,4
+  2,2023-06-23,2023-06-24,EQ *TURTLE,Food & Drink,Sale,-25.56,,8a055328d0,allTransactions,2,3
+  4,2023-06-23,2023-06-24,EQ *TURTLE,Food & Drink,Sale,-25.56,,8a055328d0,allTransactions,2,4
+  1,2023-06-22,2023-06-24,Coffee,Food & Drink,Sale,-9.37,,1bb122e1ee,allTransactions,2,4
+  0,2023-06-22,2023-06-24,parkreceipts.com,Travel,Sale,-6.0,,1a950d3f1a,allTransactions,2,3
+  2,2023-06-22,2023-06-24,parkreceipts.com,Travel,Sale,-6.0,,1a950d3f1a,allTransactions,2,4
+  3,2023-06-22,2023-06-23,RRR* Hungry Socks,Food & Drink,Sale,-67.05,,601ab19ae3,allTransactions,2,3
+  5,2023-06-22,2023-06-23,RRR* Hungry Socks,Food & Drink,Sale,-67.05,,601ab19ae3,allTransactions,2,4
+  4,2023-06-20,2023-06-21,GUTHRIES CHICKEN,Food & Drink,Sale,-23.54,,dfba74632b,allTransactions,2,3
+  6,2023-06-20,2023-06-21,GUTHRIES CHICKEN,Food & Drink,Sale,-23.54,,dfba74632b,allTransactions,2,4
+  6,2023-06-20,2023-06-20,GOOGLE *YouTube,Shopping,Sale,-13.6,,9b13c82bca,allTransactions,2,3
+  8,2023-06-20,2023-06-20,GOOGLE *YouTube,Shopping,Sale,-13.6,,9b13c82bca,allTransactions,2,4
+  5,2023-06-19,2023-06-20,Amazon.com,Shopping,Sale,-26.88,,894221824a,allTransactions,2,3
+  7,2023-06-19,2023-06-20,Amazon.com,Shopping,Sale,-26.88,,894221824a,allTransactions,2,4
+  9,2023-06-18,2023-06-19,PUBLIX,Groceries,Sale,-143.53,,b48b77a378,allTransactions,2,3
+  7,2023-06-18,2023-06-19,PUBLIX,Groceries,Sale,-9.49,,9bff506cdc,allTransactions,2,3
+  9,2023-06-18,2023-06-19,PUBLIX,Groceries,Sale,-9.49,,9bff506cdc,allTransactions,2,4
+  8,2023-06-18,2023-06-19,STARBUCKS 800-782-7282,Food & Drink,Sale,-25.0,,8c17341749,allTransactions,2,3
+  
+  '''
+# ---
+# name: TestEtlPipeline.test_open_one_csv
+  '''
+  ,Details,Posting Date,Description,Amount,Type,Balance,Check or Slip #,sha256,stagingLevel
+  0,DEBIT,2023-06-20,POS DEBIT             PUBLIX                               FL,-44.44,MISC_DEBIT,,,bbfc65a715,allTransactions
+  1,DEBIT,2023-06-19,POS DEBIT             CITGO                                FL,-12.01,MISC_DEBIT,,,5a5183fb8d,allTransactions
+  2,DEBIT,2023-06-18,POS DEBIT             MODERN Karate CENTER   TAMPA         FL,-108.0,MISC_DEBIT,,,2b7ed14dd0,allTransactions
+  3,DEBIT,2023-06-17,Payment to Credit card ending in 1111                   06/17,-700.0,ACCT_XFER,1651.89,,c200376bf5,allTransactions
+  4,DEBIT,2023-06-14,UTILITIES        UTIL PYMT                 PPD ID: 0000000001,-86.87,ACH_DEBIT,2351.89,,a0ffbc02fb,allTransactions
+  
+  '''
+# ---

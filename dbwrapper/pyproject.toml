@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "data-pipeline"
+name = "dbwrapper"
 version = "0.1.0"
-description = "A Python-based money management and forecasting tool."
+description = "dbwrapper is a module of pymoney that provides common db functions to the api and etl."
 authors = ["Andrew Samaha <andrew.samaha@gmail.com>"]
 readme = "README.md"
 
@@ -13,6 +13,12 @@ setuptools = "^59.6.0"
 cryptography = "^40.0.2"
 path = "^16.6.0"
 python-dotenv = "^1.0.0"
+pytest = "^7.3.1"
+poetry-dotenv = "^0.4.0"
+toml = "^0.10.2"
+argparse = "^1.4.0"
+syrupy = "^4.0.4"
+coverage = "^7.2.7"
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^3.2.2"

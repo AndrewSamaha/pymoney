@@ -4,3 +4,7 @@
 2. Open poetry shell: `poetry shell`
 3. Pull db from s3: `scripts/s3pull.sh`
 4. Open jupyter notebook: `code .`
+
+# Tests
+- Run `pytest` from `pymoney/dbwrapper`
+- Snapshots are created using syrupy. Run `pytest --snapshot-update` to update snapshots. Use `pytest -s` to see standard output for tests that do not fail (this can result in a lot of output).

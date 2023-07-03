@@ -5,33 +5,59 @@ from sqlalchemy.orm import sessionmaker
 import path
 import sys
 import os
+import toml
+import argparse
+from dotenv import load_dotenv
 
-# directory reach/ this lets us load modules from ../dbwrapper
+# directory reach/ this lets us load modules from ../app
 directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 
- 
-from dbwrapper.models.Account import Account
-from dbwrapper.models.Transaction import Transaction
-from dbwrapper.models.Load import Load
-from dbwrapper.constants.db import connectionString
+from dbwrapper.constants import getConnectionString, getSeedFolder, connectionString as defaultConnectionString
+from dbwrapper.models import Base
+from dbwrapper.helpers import seed_worker, getSeedEngine
+
+load_dotenv()
+
+# This is a wrapper for seed_worker
+def seed(connectionString=defaultConnectionString, engine=None, dryrunCLI=None):
+    seedFolder = getSeedFolder(os.environ.get("ENVIRONMENT"))
+    dryrunENV = os.environ.get("SEED_DRYRUN").lower() in ['true', '1', 'yes', 'on'] if os.environ.get("SEED_DRYRUN") is not None else False
+    
+    if dryrunCLI or dryrunENV: dryrun = True
+    else: dryrun = False
+
+    connectionString = getConnectionString(os.environ.get('ENVIRONMENT'))
+    engine = getSeedEngine(connectionString)
+
+    print(f"environment={os.environ.get('ENVIRONMENT')}")
+    print(f"seedFolder={seedFolder}")
+    print(f"connectionString={connectionString}")
+    print(f"SEED_DRYRUN={os.environ.get('SEED_DRYRUN')}")
+
+    seed_worker(seedFolder, engine, dryrun, Base.metadata)
 
 
-engine = create_engine(connectionString, echo=True)
+def verifyPath():
+    projectName = 'dbwrapper'
+    projectToml = './pyproject.toml'
+    exceptionMessage = 'This seed script is intended to be run from the dbwrapper root (e.g., the folder also containing a scripts/ folder and dbwrappers readme.md).'
+    if os.getcwd().split(os.sep)[-1] != projectName: raise Exception(f"{exceptionMessage}.  It should not be run from {os.getcwd()}.")
+    if not os.path.exists(projectToml): raise Exception(f"{exceptionMessage}. {projectToml} was not found!")
+    data = toml.load(projectToml)
+    if not data['tool']['poetry']['name'] == projectName: raise Exception(f"{exceptionMessage}. {projectToml} was but did not contain the correct value for tool.poetry.name!")
+    
 
-Session = sessionmaker(bind=engine)
-session = Session()
-
-seedFolder = 'db/seed_data/'
-
-for filename in os.listdir(seedFolder):
-    filepath = f"{seedFolder}/{filename}"
-    print(filepath)
-    file = open(filepath, 'r')
-    lines = file.readlines()
-    conn = engine.connect()
-
-    for seedline in lines:
-        print(seedline)
-        conn.execute(text(seedline))
-        conn.commit()
+if __name__ == "__main__":
+    verifyPath()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--dryrun', action='store_true', help='Use this option to perform a dry run of the seed script WITHOUT committing to the database.')
+    parser.add_argument('--apply', action='store_true', help='Use this option to apply the seed.')
+    args = parser.parse_args()
+    apply = args.apply
+    dryrun = args.dryrun
+    if (apply and dryrun) or (not apply and not dryrun):
+        parser.print_help()
+        print('Note: At least one argument MUST be provided.')
+        quit()
+    seed(connectionString=defaultConnectionString, engine=None, dryrunCLI=dryrun)

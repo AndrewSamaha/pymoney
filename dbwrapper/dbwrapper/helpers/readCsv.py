@@ -34,7 +34,7 @@ def prepCheckingDf(df, loadID):
     df['loadID'] = loadID
     return df
 
-def getAccountHistory(path, accountId, session):
+def getAccountHistory(path, accountId, session, rawCsvPath=rawCsvPath):
     df = None
     accountPath = f"{rawCsvPath}/{path}"
     for file in os.listdir(accountPath):

@@ -1,6 +1,9 @@
 # Don't load the db -- contains sensitive data
 db/
 
+# ignore the mock/test db
+mockdb.sqlite
+
 ## .gitignore from https://github.com/github/gitignore/blob/main/Python.gitignore
 # Byte-compiled / optimized / DLL files
 __pycache__/
