@@ -1,6 +1,5 @@
 import pytest
 import os
-from dbwrapper import testvalue
 from dbwrapper.constants import getConnectionString, getSeedFolder
 from dbwrapper.helpers import seed_worker, getSeedEngine
 from dbwrapper.models import Base

@@ -2,7 +2,6 @@ import pytest
 import os
 import pandas as pd
 from sqlalchemy.orm import sessionmaker
-from dbwrapper import testvalue
 from dbwrapper.constants import getConnectionString, getSeedFolder
 from dbwrapper.helpers import seed_worker, getSeedEngine, getAccountHistory, openOneCsv, prepCheckingDf
 from dbwrapper.models import Base

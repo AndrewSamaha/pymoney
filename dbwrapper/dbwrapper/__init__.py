@@ -13,4 +13,3 @@ from .helpers import rawQuery, rawQueryDf
 
 from .crud.read.select_summary_df import select_summary_df
 
-testvalue = 42
