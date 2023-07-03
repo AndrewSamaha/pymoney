@@ -103,4 +103,4 @@ class TestEtlPipeline:
             resultsString = f"{resultsString}{allFiles.to_csv()}"
             print(allFiles.to_csv())
 
-        assert resultsString==snapshot
+        assert resultsString == snapshot

@@ -37,11 +37,6 @@ def prepCheckingDf(df, loadID):
 def getAccountHistory(path, accountId, session, rawCsvPath=rawCsvPath):
     df = None
     accountPath = f"{rawCsvPath}/{path}"
-    #print(f"accountPath: {accountPath}")
-    #print(f"should be: tests/mock_data/rawTransactionHistory")
-    #print(f"                                          dbwrapper/tests/mock_data/rawTransactionHistory/checkingAccount")
-    #for file in os.listdir(rawCsvPath):
-    #    print(f"  {file}")
     for file in os.listdir(accountPath):
         fileAndPath = f"{rawCsvPath}/{path}/{file}"
         filenameParts = file.split('.')
